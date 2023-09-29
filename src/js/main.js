@@ -11,8 +11,14 @@ let moviesFound = [];
 let moviesFavs = [];
 
 const moviesLS = JSON.parse(localStorage.getItem('movies'));
+const moviesFavsLS = JSON.parse(localStorage.getItem('moviesFavs'));
 
 function renderPreMovies() {
+  if (moviesFavsLS !== null) {
+    moviesFavs = moviesFavsLS;
+    renderMovieList(moviesFavs, sectionFav);
+  }
+
   if (moviesLS !== null) {
     moviesFound = moviesLS;
     renderMovieList(moviesFound, sectionSearch);
@@ -21,8 +27,8 @@ function renderPreMovies() {
       .then((response) => response.json())
       .then((dataMovies) => {
         moviesFound = dataMovies;
-        localStorage.setItem('movies', JSON.stringify(moviesFound));
         renderMovieList(moviesFound, sectionSearch);
+        localStorage.setItem('movies', JSON.stringify(moviesFound));
         preMovies.innerHTML = 'Algunas peliculas recomendadas para tí';
       });
   }
@@ -50,6 +56,9 @@ function requestMovies() {
 function renderOneMovie(oneMovie) {
   const cardMovie = document.createElement('article');
   cardMovie.classList.add('card');
+  cardMovie.classList.add('js-card');
+  // ver si oneMovie está en el array de favoritos, si está le pones clase del back diferente. mirar métodos array
+  cardMovie.setAttribute('id', oneMovie.show.id);
   const titleMovie = document.createElement('h3');
   titleMovie.classList.add('titleMovie');
   titleMovie.textContent = oneMovie.show.name;
@@ -74,6 +83,7 @@ function renderMovieList(listMovies, section) {
   for (const movie of listMovies) {
     section.appendChild(renderOneMovie(movie));
   }
+  addEventCardMovie();
 }
 
 function handleClickSearch(event) {
@@ -81,5 +91,33 @@ function handleClickSearch(event) {
   requestMovies();
 }
 
+function handleClickMovie(event) {
+  const idMovieClicked = parseInt(event.currentTarget.id);
+
+  let clickedMovie = moviesFound.find(
+    (item) => item.show.id === idMovieClicked
+  );
+
+  const indexFav = moviesFavs.findIndex(
+    (item) => item.show.id === idMovieClicked
+  );
+
+  if (indexFav === -1) {
+    moviesFavs.push(clickedMovie);
+  } else {
+    moviesFavs.splice(indexFav, 1);
+  }
+  renderMovieList(moviesFavs, sectionFav);
+  // render de nuevo listado original moviesFound para poder ver la dierencia de background
+  localStorage.setItem('moviesFavs', JSON.stringify(moviesFavs));
+}
+
 btnSearch.addEventListener('click', handleClickSearch);
 renderPreMovies();
+
+function addEventCardMovie() {
+  const allMovies = document.querySelectorAll('.js-card');
+  for (const item of allMovies) {
+    item.addEventListener('click', handleClickMovie);
+  }
+}

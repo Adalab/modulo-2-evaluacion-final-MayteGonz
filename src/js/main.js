@@ -57,8 +57,17 @@ function renderOneMovie(oneMovie) {
   const cardMovie = document.createElement('article');
   cardMovie.classList.add('card');
   cardMovie.classList.add('js-card');
-  // ver si oneMovie está en el array de favoritos, si está le pones clase del back diferente. mirar métodos array
   cardMovie.setAttribute('id', oneMovie.show.id);
+
+  //ver si one movie está en el array de favoritos, por si ID. Si lo está le añades la clase favorite.
+  if (
+    moviesFavs.findIndex(
+      (findFavourite) => findFavourite.show.id === oneMovie.show.id
+    ) !== -1
+  ) {
+    cardMovie.classList.add('favorite');
+  }
+
   const titleMovie = document.createElement('h3');
   titleMovie.classList.add('titleMovie');
   titleMovie.textContent = oneMovie.show.name;
@@ -108,7 +117,7 @@ function handleClickMovie(event) {
     moviesFavs.splice(indexFav, 1);
   }
   renderMovieList(moviesFavs, sectionFav);
-  // render de nuevo listado original moviesFound para poder ver la dierencia de background
+  renderMovieList(moviesFound, sectionSearch);
   localStorage.setItem('moviesFavs', JSON.stringify(moviesFavs));
 }
 

@@ -3,11 +3,30 @@ const inputSearch = document.querySelector('.js-search');
 const btnSearch = document.querySelector('.btn-search');
 const sectionSearch = document.querySelector('.js-sectionSearch');
 const sectionFav = document.querySelector('.js-sectionFavorites');
-const error = document.querySelector('.js-error');
+const preMovies = document.querySelector('.js-recomendedMovies');
 const url = 'https://api.tvmaze.com/search/shows?q=';
+const url2 = 'https://api.tvmaze.com/search/shows?q=girls';
 
 let moviesFound = [];
 let moviesFavs = [];
+
+const moviesLS = JSON.parse(localStorage.getItem('movies'));
+
+function renderPreMovies() {
+  if (moviesLS !== null) {
+    moviesFound = moviesLS;
+    renderMovieList(moviesFound, sectionSearch);
+  } else {
+    fetch(url2)
+      .then((response) => response.json())
+      .then((dataMovies) => {
+        moviesFound = dataMovies;
+        localStorage.setItem('movies', JSON.stringify(moviesFound));
+        renderMovieList(moviesFound, sectionSearch);
+        preMovies.innerHTML = 'Algunas peliculas recomendadas para tí';
+      });
+  }
+}
 
 function requestMovies() {
   const searchValue = inputSearch.value;
@@ -15,13 +34,16 @@ function requestMovies() {
     .then((response) => response.json())
     .then((dataMovies) => {
       if (dataMovies.length === 0) {
-        error.innerHTML =
-          'No podemos encontrar lo que has buscado =( Prueba con otra peli';
+        preMovies.innerHTML = 'Prueba a buscar de nuevo =(';
         sectionSearch.innerHTML = '';
       } else {
-        error.innerHTML = '';
+        preMovies.innerHTML = 'Esto es lo que hemos encontrado: ';
         moviesFound = dataMovies;
         renderMovieList(moviesFound, sectionSearch);
+      }
+      if (searchValue === '') {
+        renderPreMovies();
+        preMovies.innerHTML = '';
       }
     });
 }
@@ -60,3 +82,4 @@ function handleClickSearch(event) {
 }
 
 btnSearch.addEventListener('click', handleClickSearch);
+renderPreMovies();

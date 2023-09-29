@@ -4,6 +4,8 @@ const btnSearch = document.querySelector('.btn-search');
 const sectionSearch = document.querySelector('.js-sectionSearch');
 const sectionFav = document.querySelector('.js-sectionFavorites');
 const preShows = document.querySelector('.js-recomendedShows');
+const btnclearFavs = document.querySelector('.js-btnClearFavs');
+
 const url = 'https://api.tvmaze.com/search/shows?q=';
 const url2 = 'https://api.tvmaze.com/search/shows?q=girls';
 
@@ -114,15 +116,18 @@ function handleClickShow(event) {
   } else {
     showsFavs.splice(indexFav, 1);
   }
-  console.log(showsFavs);
+
   renderShowList(showsFavs, sectionFav);
   renderShowList(showsFound, sectionSearch);
   localStorage.setItem('showsFavs', JSON.stringify(showsFavs));
 }
 
-btnSearch.addEventListener('click', handleClickSearch);
-renderPreShows();
-
+function handleClickClear() {
+  showsFavs = [];
+  localStorage.removeItem('showsFavs');
+  renderShowList(showsFavs, sectionFav);
+  renderShowList(showsFound, sectionSearch);
+}
 function addEventCardShow() {
   const allShows = document.querySelectorAll('.js-card');
 
@@ -130,3 +135,7 @@ function addEventCardShow() {
     item.addEventListener('click', handleClickShow);
   }
 }
+
+btnSearch.addEventListener('click', handleClickSearch);
+renderPreShows();
+btnclearFavs.addEventListener('click', handleClickClear);

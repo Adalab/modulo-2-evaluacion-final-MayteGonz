@@ -69,6 +69,9 @@ function renderOneShow(oneShow) {
   ) {
     cardShow.classList.add('favorite');
   }
+  const btnDelete = document.createElement('button');
+  btnDelete.classList.add('btnDelete');
+  btnDelete.textContent = 'X';
 
   const titleShow = document.createElement('h3');
   titleShow.classList.add('titleShow');
@@ -84,6 +87,7 @@ function renderOneShow(oneShow) {
 
   imgShow.classList.add('imgShow');
 
+  /*  cardShow.appendChild(btnDelete); */
   cardShow.appendChild(titleShow);
   cardShow.appendChild(imgShow);
   return cardShow;

@@ -18,18 +18,18 @@ const showsFavsLS = JSON.parse(localStorage.getItem('showsFavs'));
 function renderPreShows() {
   if (showsFavsLS !== null) {
     showsFavs = showsFavsLS;
-    renderShowList(showsFavs, sectionFav);
+    renderShowList(showsFavs, sectionFav, true);
   }
 
   if (showsLS !== null) {
     showsFound = showsLS;
-    renderShowList(showsFound, sectionSearch);
+    renderShowList(showsFound, sectionSearch, false);
   } else {
     fetch(url2)
       .then((response) => response.json())
       .then((dataShows) => {
         showsFound = dataShows;
-        renderShowList(showsFound, sectionSearch);
+        renderShowList(showsFound, sectionSearch, false);
         localStorage.setItem('shows', JSON.stringify(showsFound));
         preShows.innerHTML = 'Algunas peliculas recomendadas para tí';
       });
@@ -47,7 +47,7 @@ function requestShows() {
       } else {
         preShows.innerHTML = 'Esto es lo que hemos encontrado: ';
         showsFound = dataShows;
-        renderShowList(showsFound, sectionSearch);
+        renderShowList(showsFound, sectionSearch, false);
       }
       if (searchValue === '') {
         renderPreShows();
@@ -55,23 +55,29 @@ function requestShows() {
       }
     });
 }
-function renderOneShow(oneShow) {
+function renderOneShow(oneShow, isfavorite) {
   const cardShow = document.createElement('article');
   cardShow.classList.add('card');
   cardShow.classList.add('js-card');
   cardShow.setAttribute('id', oneShow.show.id);
 
-  //ver si one Show está en el array de favoritos, por su ID. Si lo está le añades la clase favorite.
-  if (
-    showsFavs.findIndex(
-      (findFavourite) => findFavourite.show.id === oneShow.show.id
-    ) !== -1
-  ) {
-    cardShow.classList.add('favorite');
+  if (isfavorite) {
+    const btnDelete = document.createElement('button');
+    btnDelete.classList.add('btnDelete');
+    btnDelete.textContent = 'X';
+    cardShow.appendChild(btnDelete);
   }
-  const btnDelete = document.createElement('button');
-  btnDelete.classList.add('btnDelete');
-  btnDelete.textContent = 'X';
+
+  //ver si one Show está en el array de favoritos, por su ID. Si lo está le añades la clase favorite.
+  if (!isfavorite) {
+    if (
+      showsFavs.findIndex(
+        (findFavourite) => findFavourite.show.id === oneShow.show.id
+      ) !== -1
+    ) {
+      cardShow.classList.add('favorite');
+    }
+  }
 
   const titleShow = document.createElement('h3');
   titleShow.classList.add('titleShow');
@@ -87,16 +93,15 @@ function renderOneShow(oneShow) {
 
   imgShow.classList.add('imgShow');
 
-  /*  cardShow.appendChild(btnDelete); */
   cardShow.appendChild(titleShow);
   cardShow.appendChild(imgShow);
   return cardShow;
 }
 
-function renderShowList(listShows, section) {
+function renderShowList(listShows, section, isfavorite) {
   section.innerHTML = '';
   for (const show of listShows) {
-    section.appendChild(renderOneShow(show));
+    section.appendChild(renderOneShow(show, isfavorite));
   }
   addEventCardShow();
 }
@@ -121,16 +126,16 @@ function handleClickShow(event) {
     showsFavs.splice(indexFav, 1);
   }
 
-  renderShowList(showsFavs, sectionFav);
-  renderShowList(showsFound, sectionSearch);
+  renderShowList(showsFavs, sectionFav, true);
+  renderShowList(showsFound, sectionSearch, false);
   localStorage.setItem('showsFavs', JSON.stringify(showsFavs));
 }
 
 function handleClickClear() {
   showsFavs = [];
   localStorage.removeItem('showsFavs');
-  renderShowList(showsFavs, sectionFav);
-  renderShowList(showsFound, sectionSearch);
+  renderShowList(showsFavs, sectionFav, true);
+  renderShowList(showsFound, sectionSearch, false);
 }
 function addEventCardShow() {
   const allShows = document.querySelectorAll('.js-card');

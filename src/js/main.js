@@ -183,5 +183,3 @@ function addEventBtnDelete() {
 btnSearch.addEventListener('click', handleClickSearch);
 renderPreShows();
 btnclearFavs.addEventListener('click', handleClickClear);
-
-// Me falta que se borre solo al darle a la X, y preguntar como meter

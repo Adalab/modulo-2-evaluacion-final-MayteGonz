@@ -82,6 +82,9 @@ function renderOneShow(oneShow, isfavorite) {
     cardShow.classList.add('favorite');
     mark.classList.remove('fa-regular');
     mark.classList.add('fa-solid');
+    if (!isfavorite) {
+      cardShow.classList.add('clickable');
+    }
   }
   topCard.appendChild(mark);
 

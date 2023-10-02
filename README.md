@@ -44,9 +44,10 @@ El objetivo de este ejercicio es desarrollar una aplicación web que permita bus
 ### Fecha Límite de Entrega
 La fecha límite de entrega para este proyecto es el **Lunes 2 de octubre de 2023 a las 14:00**.
 
+
+**Enlace a GitHub Pages:** El enlace al sitio web en GitHub Pages  esta ubicado en la página principal del repositorio, en la parte superior derecha junto a la descripción, en la sección "About".
+
+
 ### Ejercicio Realizado Por
 
 [**@MayteGonz**](https://github.com/MayteGonz)
-
-
-**Enlace a GitHub Pages:** El enlace al sitio web en GitHub Pages  esta ubicado en la página principal del repositorio, en la parte superior derecha junto a la descripción, en la sección "About".

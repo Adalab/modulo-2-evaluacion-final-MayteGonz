@@ -40,16 +40,14 @@
       }
     }
     &-btn {
-      width: 60px;
-      height: 40px;
+      @include size(60px, 40px);
       border: $primary-color solid 2px;
       background-color: azure;
       color: black;
       border-radius: 10px;
       cursor: pointer;
       @media (min-width: 768px) {
-        width: 100px;
-        height: 40px;
+        @include size(100px, 40px);
       }
     }
   }
@@ -92,15 +90,12 @@
     margin: 12px;
   }
   .imgShow {
-    width: 100px;
-    height: 150px;
+    @include size(100px, 150px);
     @media (min-width: 768px) {
-      width: 140px;
-      height: 220px;
+      @include size(140px, 220px);
     }
     @media (min-width: 1024px) {
-      width: 200px;
-      height: 300px;
+      @include size(200px, 300px);
     }
   }
 }

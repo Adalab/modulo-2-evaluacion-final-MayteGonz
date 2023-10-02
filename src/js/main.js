@@ -82,6 +82,9 @@ function renderOneShow(oneShow, isfavorite) {
     cardShow.classList.add('favorite');
     mark.classList.remove('fa-regular');
     mark.classList.add('fa-solid');
+    if (!isfavorite) {
+      cardShow.classList.add('clickable');
+    }
   }
   topCard.appendChild(mark);
 
@@ -180,5 +183,3 @@ function addEventBtnDelete() {
 btnSearch.addEventListener('click', handleClickSearch);
 renderPreShows();
 btnclearFavs.addEventListener('click', handleClickClear);
-
-// Me falta que se borre solo al darle a la X, y preguntar como meter

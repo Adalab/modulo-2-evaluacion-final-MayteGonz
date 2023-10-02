@@ -12,6 +12,10 @@
     <link rel="icon" href="./assets/images/pelicula.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script
+      src="https://kit.fontawesome.com/bcc6ce623e.js"
+      crossorigin="anonymous"
+    ></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
@@ -19,28 +23,43 @@
   </head>
 
   <body>
-    <header>
-      <h1>Buscador de series</h1>
-      <form action="">
-        <label for="search"></label>
-        <input class="js-search" id="search" name="search" type="text" />
-        <button type="submit" class="btn-search">Buscar</button>
+    <header class="header">
+      <h1 class="header_title">Buscador de series</h1>
+      <form class="form" action="">
+        <label for="search"> </label>
+        <input
+          placeholder=" ¡Busca tu serie favorita!
+         "
+          class="js-search form_input"
+          id="search"
+          name="search"
+          type="text"
+        />
+        <button type="submit" class="btn-search form_button">
+          <i class="fa-solid fa-magnifying-glass fa-2xl"></i>
+        </button>
       </form>
     </header>
+
     <main class="main">
-      <div class="boxSeccionSearch">
-        <h2 class="js-recomendedShows">
-          Algunas peliculas recomendadas para tí
-        </h2>
-        <section class="sectionSearch js-sectionSearch"></section>
+      <div class="box seccionSearch">
+        <h2 class="js-recomendedShows box_favs-title">Recomendadas para tí</h2>
+        <section class="box_sectionSearch js-sectionSearch"></section>
       </div>
 
-      <div class="boxSeccionFav">
-        <h2>Lista de favoritos</h2>
-        <button class="js-btnClearFavs">Borrar toda la lista</button>
-        <section class="sectionFav js-sectionFavorites"></section>
+      <div class="box seccionFav">
+        <div class="box_favs">
+          <h2 class="box_favs-title">Lista de favoritos</h2>
+          <button class="box_favs-btn js-btnClearFavs">Borrar todo</button>
+        </div>
+        <section class="box_sectionFav js-sectionFavorites"></section>
       </div>
     </main>
+
+    <footer class="footer">
+      <p class="footer_p">Made by Mayte  &#128147</p>
+    </footer>
+
     <script src="./assets/js/main.js"></script>
   </body>
 </html>

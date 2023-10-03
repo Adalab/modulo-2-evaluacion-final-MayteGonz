@@ -5,6 +5,7 @@ const sectionSearch = document.querySelector('.js-sectionSearch');
 const sectionFav = document.querySelector('.js-sectionFavorites');
 const preShows = document.querySelector('.js-recomendedShows');
 const btnclearFavs = document.querySelector('.js-btnClearFavs');
+const results = document.querySelector('.js-results');
 
 const url = 'https://api.tvmaze.com/search/shows?q=';
 const url2 = 'https://api.tvmaze.com/search/shows?q=girls';
@@ -53,6 +54,7 @@ function requestShows() {
         renderPreShows();
         preShows.innerHTML = '';
       }
+      results.innerHTML = `Hay ${dataShows.length}resultados`;
     });
 }
 
@@ -87,6 +89,11 @@ function renderOneShow(oneShow, isfavorite) {
     }
   }
   topCard.appendChild(mark);
+
+  const premier = document.createElement('p');
+  premier.textContent = oneShow.show.premiered;
+
+  cardShow.appendChild(premier);
 
   const imgShow = document.createElement('img');
   imgShow.alt = `Imagen de portada de la peli ${oneShow.show.name}`;
@@ -179,7 +186,13 @@ function addEventBtnDelete() {
     button.addEventListener('click', handleClickDeleteOne);
   }
 }
+function handleClickResult() {
+  for (const item of showsFound) {
+    console.log(item.show.name);
+  }
+}
 
 btnSearch.addEventListener('click', handleClickSearch);
 renderPreShows();
 btnclearFavs.addEventListener('click', handleClickClear);
+results.addEventListener('click', handleClickResult);
